@@ -33,7 +33,6 @@ parser.add_argument('--input-transform', default='logmel23_mn',
                              'logmel23_mvn', 'logmel23_swn'],
                     help='input transform')
 parser.add_argument('--lr', default=0.001, type=float)
-parser.add_argument('--modeltype', default='transformer', type=str)
 parser.add_argument('--optimizer', default='noam', type=str)
 parser.add_argument('--num-speakers', default=3, type=int)
 parser.add_argument('--gradclip', default=5, type=int,

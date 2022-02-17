@@ -155,8 +155,6 @@ def train(args):
                 dropout_rate=args.transformer_encoder_dropout,
                 all_n_speakers=all_n_speakers,
                 d=args.spkv_dim)
-    else:
-        raise ValueError(args.modeltype)
 
     if args.initmodel:
         # adaptation
@@ -165,29 +163,29 @@ def train(args):
         all_n_speakers = fix_model_parameter_dict["embed.weight"].shape[0]
 
         print("old all_n_speakers : {}".format(all_n_speakers))
-        if args.modeltype == "transformer":
-            net = TransformerDiarization(
-                    args.num_speakers,
-                    featdim,
-                    n_units=args.hidden_size,
-                    n_heads=args.transformer_encoder_n_heads,
-                    n_layers=args.transformer_encoder_n_layers,
-                    dropout_rate=args.transformer_encoder_dropout,
-                    all_n_speakers=all_n_speakers,
-                    d=args.spkv_dim)
-        elif args.modeltype == "conformer":
-            net = ConformerDiarization(
-                    args.num_speakers,
-                    featdim,
-                    n_units=args.hidden_size,
-                    n_heads=args.transformer_encoder_n_heads,
-                    n_layers=args.transformer_encoder_n_layers,
-                    dropout_rate=args.transformer_encoder_dropout,
-                    all_n_speakers=all_n_speakers,
-                    d=args.spkv_dim)
-        else:
-            raise ValueError(args.modeltype)
+        transformer_net = TransformerDiarization(
+                args.num_speakers,
+                featdim,
+                n_units=args.hidden_size,
+                n_heads=args.transformer_encoder_n_heads,
+                n_layers=args.transformer_encoder_n_layers,
+                dropout_rate=args.transformer_encoder_dropout,
+                all_n_speakers=all_n_speakers,
+                d=args.spkv_dim)
+        conformer_net = ConformerDiarization(
+                args.num_speakers,
+                featdim,
+                n_units=args.hidden_size,
+                n_heads=args.transformer_encoder_n_heads,
+                n_layers=args.transformer_encoder_n_layers,
+                dropout_rate=args.transformer_encoder_dropout,
+                all_n_speakers=all_n_speakers,
+                d=args.spkv_dim)
 
+        if args.useconformer == 'true':
+            net = conformer_net
+        else:
+            net = transformer_net
         net.load_state_dict(fix_model_parameter_dict)
         npz = np.load(args.spkv_lab)
         spkvecs = npz['arr_0']
