@@ -18,11 +18,7 @@ def average_model_pytorch(ifiles, ofile):
             else:
                 omodel[key] += val
     for key in omodel.keys():
-        if omodel[key] is not None:
-            omodel[key] = torch.true_divide(omodel[key], len(ifiles))
-        # pytorch 1.6 use true_divide instead of /=
-        # invoid type cast error
-        #omodel[key] /= len(ifiles)
+        omodel[key] /= len(ifiles)
     torch.save(dict(model=omodel), ofile)
 
 
