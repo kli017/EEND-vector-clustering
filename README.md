@@ -1,3 +1,5 @@
+# New Feature
+conformer based encoder added
 # EEND-vector clustering
 
 The EEND-vector clustering (End-to-End-Neural-Diarization-vector clustering) is a speaker diarization framework that integrates two complementary major diarization approaches, i.e., traditional clustering-based and emerging end-to-end neural network-based approaches, to make the best of both worlds. In [1] it is shown that the EEND-vector clustering outperforms EEND when the recording is long (e.g., more than 5 min), while in [2] it is shown based on CALLHOME data that it outperforms x-vector clustering and EEND-EDA especially when the number of speakers in recordings is large.
